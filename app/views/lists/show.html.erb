@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h1><%= @list.name%></h1>
+      <h3>Movies in this list of this list</h3>
+      <ul>
+        <% @list.movies.each do |movie| %>
+          <li><strong class="title-bold"><%= movie.title %></strong> | <em class="synopsis-italic"><%= movie.overview %> </em><br/>
+            <%= movie.bookmarks.where(list_id: @list.id).first.comment %> | Added: <%= movie.created_at.strftime("%d/%m/%Y") %>
+            <br/>
+          </li>
+        <% end %>
+      </ul>
+      <button class="btn btn-primary"><%= "+ Add a movie" %></button>
+      <br/>
+      <br/>
+      <h3>Add a movie to <%= @list.name %></h3>
+      <%= simple_form_for [@list, @bookmark] do |f| %>
+        <%= f.input :comment %>
+        <%= f.input :movie_id, collection: Movie.all %>
+        <%= f.submit class: "btn btn-primary" %>
+      <% end %>
+      <p><%= link_to "Back to movie lists", lists_path%></p>
+    </div>
+  </div>
+</div>
