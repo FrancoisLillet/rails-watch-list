@@ -1,26 +1,46 @@
 <div class="container">
   <div class="row">
     <div class="col-12">
-      <h1><%= @list.name%></h1>
-      <h3>Movies in this list of this list</h3>
-      <ul>
+      <h1 class="page-title"><%= @list.name%></h1>
         <% @list.movies.each do |movie| %>
-          <li><strong class="title-bold"><%= movie.title %></strong> | <em class="synopsis-italic"><%= movie.overview %> </em><br/>
-            <%= movie.bookmarks.where(list_id: @list.id).first.comment %> | Added: <%= movie.created_at.strftime("%d/%m/%Y") %>
-            <br/>
-          </li>
+          <div class="movie-card">
+            <div class="my-image-column">
+              <img class="movie-poster" src="<%= movie.poster_url %>" alt="<%= movie.title %>">
+            </div>
+            <div class="my-description-column">
+              <% bookmark = movie.bookmarks.where(list_id: @list.id).first %>
+              <strong class="title-bold"><%= movie.title %></strong> | <em class="synopsis-italic"><%= movie.overview %></em><br/><br/>
+              <%= bookmark.comment %> <br/> Added: <%= movie.created_at.strftime("%d/%m/%Y") %>
+              <%= link_to "🗑", list_bookmark_path(@list.id, bookmark.id), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %></li>
+            </div>
+          </div>
         <% end %>
-      </ul>
-      <button class="btn btn-primary"><%= "+ Add a movie" %></button>
+      <a href="#add-form"><button class="btn btn-primary" id="add-button"><%= "+ Add a movie" %></button></a>
+      <br/><br/>
+      <p><%= link_to "Back to movie lists", lists_path%></p>
       <br/>
-      <br/>
+    </div>
+  </div>
+  <div id="add-form" class="display-none">
       <h3>Add a movie to <%= @list.name %></h3>
       <%= simple_form_for [@list, @bookmark] do |f| %>
         <%= f.input :comment %>
         <%= f.input :movie_id, collection: Movie.all %>
         <%= f.submit class: "btn btn-primary" %>
       <% end %>
-      <p><%= link_to "Back to movie lists", lists_path%></p>
-    </div>
   </div>
 </div>
+
+<!-- CHECK THE PROBLEM OF ADD BUTTON -->
+
+
+
+<script>
+  const addForm = document.getElementById("add-form");
+  const addButton = document.getElementById("add-button");
+  console.log(addForm);
+
+  addButton.addEventListener("click", (event) => {
+    addForm.classList.remove("display-none");
+  })
+</script>
