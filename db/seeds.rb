@@ -14,6 +14,12 @@ Movie.create(title: "The Shawshank Redemption", overview: "Framed in the 1940s f
 Movie.create(title: "Titanic", overview: "101-year-old Rose DeWitt Bukater tells the story of her life aboard the Titanic.", poster_url: "https://image.tmdb.org/t/p/original/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg", rating: 7.9)
 Movie.create(title: "Ocean's Eight", overview: "Debbie Ocean, a criminal mastermind, gathers a crew of female thieves to pull off the heist of the century.", poster_url: "https://image.tmdb.org/t/p/original/MvYpKlpFukTivnlBhizGbkAe3v.jpg", rating: 7.0)
 
+history = List.new({name: "History"})
+triumph_of_the_death = URI.open("https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/The_Triumph_of_Death_by_Pieter_Bruegel_the_Elder.jpg/1200px-The_Triumph_of_Death_by_Pieter_Bruegel_the_Elder.jpg").read
+history.photo.attach(triumph_of_the_death)
+history.save!
+
+
 # Additional seeding with API:
 
 uri = "https://tmdb.lewagon.com/movie/top_rated?&language=en-US&page=2"

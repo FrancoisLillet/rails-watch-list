@@ -1,7 +1,9 @@
+<div class="my-banner" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('<%= cl_image_path @list.photo.key%>'); padding:150px; background-cover: fill;">
+  <h1 class="page-title"><%= @list.name%></h1>
+</div>
 <div class="container">
   <div class="row">
     <div class="col-12">
-      <h1 class="page-title"><%= @list.name%></h1>
         <% @list.movies.each do |movie| %>
           <div class="movie-card">
             <div class="my-image-column">
